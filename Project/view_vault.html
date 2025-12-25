@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vault</title>
+<link rel="stylesheet" href="vault.css">
+</head>
+<body>
+<div class="container">
+<h2>Password Vault</h2>
+<table id="vaultTable">
+<tr><th>Website</th><th>Username</th><th>Password</th></tr>
+</table>
+<button onclick="clearVault()">Clear Vault</button>
+<button onclick="location.href='index.html'">Back to Home</button>
+</div>
+
+<script>
+// ===== Helpers =====
+function str2ab(str){return new TextEncoder().encode(str);}
+function ab2str(buf){return new TextDecoder().decode(buf);}
+
+// Derive 256-bit key from master password using SHA-256
+async function generateKey(password){
+    const hash = await crypto.subtle.digest("SHA-256", str2ab(password));
+    return await crypto.subtle.importKey("raw", hash, "AES-GCM", true, ["encrypt","decrypt"]);
+}
+
+// Decrypt data
+async function decryptData(encrypted,key){
+    const iv=new Uint8Array(encrypted.iv);
+    const data=new Uint8Array(encrypted.data);
+    try {
+        const decrypted=await crypto.subtle.decrypt({name:"AES-GCM",iv:iv},key,data);
+        return ab2str(decrypted);
+    } catch(e){
+        return "**** (wrong master key)";
+    }
+}
+
+// Load vault
+async function loadVault(){
+    const masterPassword=prompt("Enter master password to view vault:");
+    if(!masterPassword) return alert("Master password required!");
+    const key=await generateKey(masterPassword);
+    const vault=JSON.parse(localStorage.getItem("vault")||"[]");
+    const table=document.getElementById("vaultTable");
+
+    // Clear existing rows except header
+    table.innerHTML="<tr><th>Website</th><th>Username</th><th>Password</th></tr>";
+
+    for(let entry of vault){
+        const decrypted=await decryptData(entry.password,key);
+        const row=table.insertRow();
+        row.insertCell(0).innerText=entry.website;
+        row.insertCell(1).innerText=entry.username;
+        row.insertCell(2).innerText=decrypted;
+    }
+}
+
+// Clear vault
+function clearVault(){
+    if(confirm("Are you sure you want to clear the vault?")){
+        localStorage.removeItem("vault");
+        location.reload();
+    }
+}
+
+// Load vault on page load
+loadVault();
+</script>
+</body>
+</html>

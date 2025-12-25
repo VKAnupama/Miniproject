@@ -1,0 +1,9 @@
+body{background:#eafaf1; font-family:"Segoe UI",sans-serif; min-height:100vh; padding:20px;}
+h2{text-align:center; color:#2f6f5e; margin-bottom:20px;}
+table{width:92%; margin:auto; border-collapse:collapse; background:white; border-radius:18px; overflow:hidden; box-shadow:0 12px 30px rgba(150,220,190,0.35);}
+th,td{padding:12px;text-align:center;}
+th{background:#a6e3c6;color:#1f4f3f;}
+tr:nth-child(even){background:#f4fffb;}
+tr:hover{background:#ecfbf5;}
+button{display:block;margin:15px auto;padding:12px 30px;border-radius:30px;border:none;font-weight:600;cursor:pointer; transition:0.3s;}
+button:hover{opacity:0.85;}

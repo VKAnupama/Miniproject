@@ -1,0 +1,11 @@
+body{background:#edfdf6; font-family:"Segoe UI",sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh;}
+.container{width:360px; background:white; padding:26px; border-radius:18px; box-shadow:0 12px 30px rgba(150,220,190,0.35);}
+h1,h3{text-align:center; color:#2f6f5e;}
+input,textarea,button{width:100%; margin-top:12px; padding:11px; border-radius:12px; font-size:14px;}
+input,textarea{border:1px solid #cdeee2; background:#f4fffb;}
+button{background:#a6e3c6; color:#1f4f3f; border:none; font-weight:600; cursor:pointer;}
+button:hover{background:#92d8b8;}
+#strength{text-align:center; margin-top:12px; font-weight:bold;}
+.weak{color:#e76f51;}
+.medium{color:#f4a261;}
+.strong{color:#2a9d8f;}
