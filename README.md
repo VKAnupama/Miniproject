@@ -1,6 +1,7 @@
 # Password Strength Analyzer
 
 **Project Purpose**
+
 The Password Manager is a web-based application designed to help users generate, analyze, save, and manage passwords securely. It ensures that users can create strong passwords, store them safely in the browser, and access them later only with proper authorization
 
 **Project Features**
